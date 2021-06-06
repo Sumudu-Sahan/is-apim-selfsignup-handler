@@ -33,21 +33,6 @@
             <version>4.6.0</version>
         </dependency>
         <dependency>
-            <groupId>org.wso2.carbon.identity</groupId>
-            <artifactId>org.wso2.carbon.identity.mgt</artifactId>
-            <version>5.17.5</version>
-        </dependency>
-        <dependency>
-            <groupId>org.wso2.carbon.identity</groupId>
-            <artifactId>org.wso2.carbon.identity.base</artifactId>
-            <version>5.17.5</version>
-        </dependency>
-        <dependency>
-            <groupId>org.wso2.carbon.identity.framework</groupId>
-            <artifactId>org.wso2.carbon.identity.workflow.mgt</artifactId>
-            <version>5.17.5</version>
-        </dependency>
-        <dependency>
             <groupId>org.wso2.carbon.identity.event.handler.notification</groupId>
             <artifactId>org.wso2.carbon.identity.event.handler.notification</artifactId>
             <version>1.3.0</version>
@@ -56,11 +41,6 @@
             <groupId>org.wso2.carbon.identity.governance</groupId>
             <artifactId>org.wso2.carbon.identity.recovery</artifactId>
             <version>1.4.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.wso2.carbon.apimgt</groupId>
-            <artifactId>org.wso2.carbon.apimgt.impl</artifactId>
-            <version>6.7.206</version>
         </dependency>
     </dependencies>
 
@@ -93,8 +73,6 @@
                         </Export-Package>
                         <Import-Package>
                             org.wso2.carbon.user.core.*,
-                            org.wso2.carbon.identity.mgt.*,
-                            org.wso2.carbon.identity.base.*,
                             org.wso2.carbon.identity.event.handler.notification.*,
                             org.wso2.carbon.identity.recovery.*,
                             org.osgi.service.component.annotations.*,
