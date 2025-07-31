@@ -63,8 +63,8 @@ public class CustomUserPostSelfRegistrationHandler extends AbstractEventHandler 
                 //This code segment will execute if the user is in the userstore
                 List<String> roleList = Arrays.asList(userStoreManager.getRoleListOfUser(userName));//You can get all the assigned roles of the user as a list
 
-                if (roleList.contains(HandlerConstants.SELF_SIGNUP_ROLE) && !roleList.contains(HandlerConstants.TEST_SUBSCRIBER_GROUP)) { //Internal/selfsignup role will assign when doing the user self registration
-                    String[] rolesThatNeedToAdd = {HandlerConstants.TEST_SUBSCRIBER_GROUP}; //You can add user roles that need to assign to the user
+                if (roleList.contains(HandlerConstants.SELF_SIGNUP_ROLE) && !roleList.contains(HandlerConstants.TEST_SUBSCRIBER_ROLE)) { //Internal/selfsignup role will assign when doing the user self registration
+                    String[] rolesThatNeedToAdd = {HandlerConstants.TEST_SUBSCRIBER_ROLE}; //You can add user roles that need to assign to the user
                     String[] rolesThatNeedToRemove = {}; //You can add user roles that need to unassigned from the user
                     userStoreManager.updateRoleListOfUser(userName, rolesThatNeedToRemove, rolesThatNeedToAdd);
                 }
