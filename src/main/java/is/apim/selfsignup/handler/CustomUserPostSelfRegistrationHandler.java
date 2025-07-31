@@ -18,9 +18,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class CustomUserPostSelfRegistrationHandler extends AbstractEventHandler {
-    private static final String TEST_ROLE = "TEST";
-    private static final String SELF_SIGNUP_ROLE = "Internal/selfsignup";
-    private static final int HIGH_PRIORITY = 250;
 
     @Override
     public String getName() {
@@ -35,12 +32,12 @@ public class CustomUserPostSelfRegistrationHandler extends AbstractEventHandler 
         String userName =
                 (String) event.getEventProperties().get(IdentityEventConstants.EventProperty.USER_NAME);
 
-        // The handler should be called ss a post add user event.
+        // The handler should be called as a post add user event.
         if (IdentityEventConstants.Event.POST_ADD_USER.equals(event.getEventName())) {
             try {
                 executeUserRegistrationWorkflow(tenantDomain, userName);
             } catch (IdentityRecoveryServerException e) {
-                throw new IdentityEventException("Error while adding custom roles to the user", e);
+                throw new IdentityEventException(HandlerConstants.ERROR_MSG_ADDING_CUSTOM_ROLES_TO_USER, e);
             }
         }
     }
@@ -53,8 +50,7 @@ public class CustomUserPostSelfRegistrationHandler extends AbstractEventHandler 
      * @throws org.wso2.carbon.identity.recovery.IdentityRecoveryServerException when unable to
      *                                                                           retrieve userStoreManager instance
      */
-    private void executeUserRegistrationWorkflow(String tenantDomain, String userName)
-            throws org.wso2.carbon.identity.recovery.IdentityRecoveryServerException {
+    private void executeUserRegistrationWorkflow(String tenantDomain, String userName) throws IdentityRecoveryServerException {
         try {
             // Realm service is used to get the UserStoreManager
             UserStoreManager userStoreManager = PrivilegedCarbonContext.getThreadLocalCarbonContext().getUserRealm().getUserStoreManager();
@@ -67,15 +63,14 @@ public class CustomUserPostSelfRegistrationHandler extends AbstractEventHandler 
                 //This code segment will execute if the user is in the userstore
                 List<String> roleList = Arrays.asList(userStoreManager.getRoleListOfUser(userName));//You can get all the assigned roles of the user as a list
 
-                if (roleList.contains(SELF_SIGNUP_ROLE) && !roleList.contains(TEST_ROLE)) { //Internal/selfsignup role will assign when doing the user self registration
-                    String[] rolesThatNeedToAdd = {TEST_ROLE}; //You can add user roles that need to assign to the user
+                if (roleList.contains(HandlerConstants.SELF_SIGNUP_ROLE) && !roleList.contains(HandlerConstants.TEST_SUBSCRIBER_GROUP)) { //Internal/selfsignup role will assign when doing the user self registration
+                    String[] rolesThatNeedToAdd = {HandlerConstants.TEST_SUBSCRIBER_GROUP}; //You can add user roles that need to assign to the user
                     String[] rolesThatNeedToRemove = {}; //You can add user roles that need to unassigned from the user
                     userStoreManager.updateRoleListOfUser(userName, rolesThatNeedToRemove, rolesThatNeedToAdd);
                 }
             }
         } catch (UserStoreException e) {
-            throw Utils.handleServerException(
-                    IdentityRecoveryConstants.ErrorMessages.ERROR_CODE_UNEXPECTED, userName, e);
+            throw Utils.handleServerException(IdentityRecoveryConstants.ErrorMessages.ERROR_CODE_UNEXPECTED, userName, e);
         } finally {
             Utils.clearArbitraryProperties();
             PrivilegedCarbonContext.endTenantFlow();
@@ -90,7 +85,7 @@ public class CustomUserPostSelfRegistrationHandler extends AbstractEventHandler 
 
     @Override
     public int getPriority(MessageContext messageContext) {
-        return HIGH_PRIORITY;
+        return HandlerConstants.HIGH_PRIORITY;
     }
 
 }
