@@ -22,4 +22,5 @@ subscriptions=["POST_ADD_USER"]
 For the rest of configurations, please refer to the medium article[1] and [2] to configure the OIDC SSO with IS 7.x.x version.
 
 [1] https://sumudusahanweerasuriya.medium.com/wso2-api-manager-3-2-0-with-wso2-identity-server-5-10-0-sso-self-registration-ec14bdf2fe97
+
 [2] https://medium.com/@sumudusahanweerasuriya/wso2-api-manager-portal-oidc-sso-with-wso2-identity-server-7-0-0-c2c786c588f1
